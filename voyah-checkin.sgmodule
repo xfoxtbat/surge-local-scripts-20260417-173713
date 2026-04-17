@@ -1,7 +1,7 @@
 #!name=岚图汽车每日签到
 #!desc=v7.2: 单文件双模式。打开岚图微信小程序自动获取Cookie，每天8:00自动签到；已修复真实签到接口与 JS 相对路径问题。
 #!category=Task
-#!version=7.2.0
+#!version=7.2.1
 
 [MITM]
 hostname = %APPEND% *.voyah.com.cn
