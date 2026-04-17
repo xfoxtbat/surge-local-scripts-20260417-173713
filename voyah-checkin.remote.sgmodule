@@ -1,0 +1,11 @@
+#!name=岚图汽车每日签到
+#!desc=v6: 单文件双模式。打开岚图微信小程序自动获取Cookie，每天8:00自动签到。
+#!category=Task
+#!version=6.0.0
+
+[MITM]
+hostname = %APPEND% *.voyah.com.cn
+
+[Script]
+岚图-抓取Cookie = type=http-request,pattern=^https://.*\.voyah\.com\.cn/mygateway/,requires-body=0,max-size=0,script-path=https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/main/voyah-checkin.js,script-update-interval=0,timeout=10
+岚图-每日签到 = type=cron,cronexp=0 8 * * *,script-path=https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/main/voyah-checkin.js,script-update-interval=0,timeout=30

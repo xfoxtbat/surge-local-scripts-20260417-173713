@@ -1,0 +1,12 @@
+#!name = emos.best 每日签到
+#!desc = 自动抓取 token 并每日签到，按 /api/user.sign.sign_at 判断是否今日已签到。
+#!author = Minis
+#!homepage = https://www.postman.com/somebyteorg/emos
+#!icon = https://emos.best/favicon.ico
+
+[Script]
+emos token 自动更新 = type=http-response,pattern=^https://emos\.best/api/,script-path=https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/main/emos_checkin.js,requires-body=1,timeout=10,max-size=131072
+emos 每日签到 = type=cron,cronexp="0 9 * * *",script-path=https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/main/emos_checkin.js,timeout=30,wake-system=1
+
+[MITM]
+hostname = emos.best
