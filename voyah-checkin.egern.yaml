@@ -1,0 +1,26 @@
+name: 岚图每日签到（Egern）
+description: 自动抓取小程序 Cookie，每天 08:00 调用真实签到接口。首次使用须重新抓取 Cookie。
+author: Minis
+homepage: https://github.com/xfoxtbat/surge-local-scripts-20260417-173713
+compat_arguments:
+  SCRIPT_URL: https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/main/voyah-checkin.egern.mjs
+compat_arguments_desc: 默认使用 GitHub 远程脚本，无需填写本地路径。
+mitm:
+  hostnames:
+    - '*.voyah.com.cn'
+scriptings:
+  - http_request:
+      name: 岚图-抓取Cookie-Egern
+      match: '^https://.*\.voyah\.com\.cn/mygateway/'
+      script_url: '{{{SCRIPT_URL}}}'
+      body_required: false
+      timeout: 10
+  - schedule:
+      name: 岚图-每日签到-Egern
+      cron: '0 8 * * *'
+      script_url: '{{{SCRIPT_URL}}}'
+      timeout: 45
+  - generic:
+      name: 岚图-手动签到-Egern
+      script_url: '{{{SCRIPT_URL}}}'
+      timeout: 45
