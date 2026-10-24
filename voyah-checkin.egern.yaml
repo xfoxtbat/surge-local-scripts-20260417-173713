@@ -1,13 +1,10 @@
 name: 岚图每日签到（Egern）
-description: v1.1 隔离 App 与小程序凭据；仅负责小程序签到，不保证 App 签到同步。升级后须重新打开小程序抓取 Cookie。
+description: v1.2 日常签到不启用 MITM，避免影响岚图 App。更新 Cookie 时临时启用岚图抓包模块并打开微信小程序，抓取后立即关闭抓包模块。
 author: Minis
 homepage: https://github.com/xfoxtbat/surge-local-scripts-20260417-173713
 compat_arguments:
   SCRIPT_URL: https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/17e78b8ed2b85c263f32a0697b9760d94d3c4f83/voyah-checkin.egern.mjs
 compat_arguments_desc: 默认使用 GitHub 远程脚本，无需填写本地路径。
-mitm:
-  hostnames:
-    - '*.voyah.com.cn'
 scriptings:
   - http_request:
       name: 岚图-抓取Cookie-Egern
