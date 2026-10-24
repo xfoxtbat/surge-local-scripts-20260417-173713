@@ -1,9 +1,9 @@
 name: 岚图每日签到（Egern）
-description: v1.2 日常签到不启用 MITM，避免影响岚图 App。更新 Cookie 时临时启用岚图抓包模块并打开微信小程序，抓取后立即关闭抓包模块。
+description: v1.3 日常不启用 MITM；增加不含 Cookie 的执行日志和结果，便于核实成功、已签到或凭据失效。抓取 Cookie 时临时开启抓包，完成后立即关闭。
 author: Minis
 homepage: https://github.com/xfoxtbat/surge-local-scripts-20260417-173713
 compat_arguments:
-  SCRIPT_URL: https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/17e78b8ed2b85c263f32a0697b9760d94d3c4f83/voyah-checkin.egern.mjs
+  SCRIPT_URL: https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/867f9cd/voyah-checkin.egern.mjs
 compat_arguments_desc: 默认使用 GitHub 远程脚本，无需填写本地路径。
 scriptings:
   - http_request:
