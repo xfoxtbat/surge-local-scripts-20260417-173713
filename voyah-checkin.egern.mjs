@@ -22,13 +22,26 @@ export default async function(ctx) {
   }
   return await new Promise((resolve, reject) => {
     let completed = false;
-    const $done = () => { if (!completed) { completed = true; resolve(); } };
+    const report = {time:new Date().toISOString(),hasCookie:!!ctx.storage.get(COOKIE_KEY),messages:[]};
+    console.log('[voyah] start; hasCookie=' + report.hasCookie);
+    const $done = () => {
+      if (!completed) {
+        completed = true;
+        ctx.storage.set('voyah_egern_last_run', JSON.stringify(report));
+        console.log('[voyah] result ' + JSON.stringify(report));
+        resolve(report);
+      }
+    };
     const $persistentStore = {
       read: key => ctx.storage.get(key === 'voyah_mp_cookie' ? COOKIE_KEY : key),
       write: (value, key) => { ctx.storage.set(key === 'voyah_mp_cookie' ? COOKIE_KEY : key, String(value)); return true; }
     };
     const $notification = {
-      post: (title, subtitle, body) => ctx.notify({title, subtitle, body})
+      post: (title, subtitle, body) => {
+        report.messages.push(subtitle);
+        console.log('[voyah] ' + subtitle);
+        ctx.notify({title, subtitle, body});
+      }
     };
     const $request = ctx.request ? {
       url: ctx.request.url,
