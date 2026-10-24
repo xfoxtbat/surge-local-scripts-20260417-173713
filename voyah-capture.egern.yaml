@@ -1,0 +1,8 @@
+name: 岚图临时抓包诊断（Egern）
+description: 仅记录岚图域名的 HTTP 请求响应，不修改请求或执行签到。诊断结束后请禁用并清理含凭据的记录。
+author: Minis
+mitm:
+  hostnames:
+    - '*.voyah.com.cn'
+http_captures:
+  - '*.voyah.com.cn'
