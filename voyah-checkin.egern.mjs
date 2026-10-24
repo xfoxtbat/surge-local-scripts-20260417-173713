@@ -1,11 +1,31 @@
-// Egern native ctx adapter. Original Surge files remain unchanged.
+// Egern native ctx adapter v1.1. Original Surge files remain unchanged.
 export default async function(ctx) {
+  const COOKIE_KEY = 'voyah_egern_mp_cookie_v2';
+  // Native capture: never reuse an App or unclassified request as a mini-program session.
+  if (ctx.request) {
+    const h = ctx.request.headers;
+    const referer = h.get('referer') || '';
+    const platform = (h.get('platform') || '').toLowerCase();
+    const mpReferer = /^https:\/\/servicewechat\.com\/wxb4474b5dec1c7a42\//i.test(referer);
+    const appPlatform = platform && platform !== 'miniprogram';
+    const cookie = h.get('cookie') || '';
+    const trusted = mpReferer && !appPlatform;
+    ctx.storage.set('voyah_egern_last_capture', JSON.stringify({
+      time: new Date().toISOString(), source: trusted ? 'miniProgram' : 'ignored',
+      hasCookie: !!cookie, platform: platform === 'miniprogram' ? 'miniProgram' : (platform ? 'other' : 'absent')
+    }));
+    if (trusted && /(?:^|;\s*)usersig=[^;]+/.test(cookie) && cookie !== ctx.storage.get(COOKIE_KEY)) {
+      ctx.storage.set(COOKIE_KEY, cookie);
+      ctx.notify({title:'岚图小程序签到',subtitle:'✅ 小程序 Cookie 已更新',body:'已隔离 App 凭据；请手动运行签到验证。此通知不代表签到成功。'});
+    }
+    return; // Observe only: leave the original App/mini-program request unchanged.
+  }
   return await new Promise((resolve, reject) => {
     let completed = false;
     const $done = () => { if (!completed) { completed = true; resolve(); } };
     const $persistentStore = {
-      read: key => ctx.storage.get(key),
-      write: (value, key) => { ctx.storage.set(key, String(value)); return true; }
+      read: key => ctx.storage.get(key === 'voyah_mp_cookie' ? COOKIE_KEY : key),
+      write: (value, key) => { ctx.storage.set(key === 'voyah_mp_cookie' ? COOKIE_KEY : key, String(value)); return true; }
     };
     const $notification = {
       post: (title, subtitle, body) => ctx.notify({title, subtitle, body})
