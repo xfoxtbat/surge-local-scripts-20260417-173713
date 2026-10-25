@@ -1,0 +1,8 @@
+#!name=B站视频跳转 Minibili
+#!desc=v1.0：将 B 站标准视频网页跳转至 minibili://video/{id}，支持 BV、av 和数字 ID。需开启 MITM 并信任 Surge CA；不能接管 iOS Universal Links，Safari 可能提示确认打开。
+
+[URL Rewrite]
+^https?://(?:www\.|m\.)?bilibili\.com/video/(BV[0-9A-Za-z]+|av[0-9]+|[0-9]+)(?:[/?#].*)?$ minibili://video/$1 302
+
+[MITM]
+hostname = %APPEND% www.bilibili.com, m.bilibili.com, bilibili.com
