@@ -1,0 +1,15 @@
+name: B站视频跳转 Minibili
+description: 'v1.0：将 B 站标准视频网页重定向至 minibili://video/{id}。需开启 HTTPS 解密并信任 Egern CA。仅适用于经过 Egern 的网页请求，不能接管 iOS Universal Links。'
+author: Minis
+homepage: https://egernapp.com/docs/configuration/url_rewrites
+
+url_rewrites:
+  - match: '^https?://(?:www\.|m\.)?bilibili\.com/video/(BV[0-9A-Za-z]+|av[0-9]+|[0-9]+)(?:[/?#].*)?$'
+    location: 'minibili://video/$1'
+    status_code: 302
+
+mitm:
+  hostnames:
+    - www.bilibili.com
+    - m.bilibili.com
+    - bilibili.com
