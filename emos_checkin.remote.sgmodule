@@ -9,4 +9,4 @@ emos token 自动更新 = type=http-response,pattern=^https://emos\.best/api/,sc
 emos 每日签到 = type=cron,cronexp="0 9 * * *",script-path=https://raw.githubusercontent.com/xfoxtbat/surge-local-scripts-20260417-173713/main/emos_checkin.js,timeout=30,wake-system=1
 
 [MITM]
-hostname = emos.best
+hostname = %APPEND% emos.best
